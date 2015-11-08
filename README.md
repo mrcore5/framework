@@ -71,7 +71,7 @@ based on what you do next.  We'll be turning this install into a wiki!
 * Edit the `.env` to your liking
 	* Add a `APP_URL=http://example.com` key
 	* Add a `MRCORE_WIKI_WEBDAV_URL=webdav.example.com` key
-	* All the wiki needs is a database defined here.  Give it whatever name you want.  I call it `mrcore5`
+	* Define the database, we'll call this one `mrcore5` on localhost
 	* I also use `redis` for all my `cache`, `session`, and `queue` drivers, but up to you
 * Manually edit `config/modules.php` and set `'enable' => true'` for the Auth, Wiki, BaseTheme modules
 * Run the mrcore5/wiki migrations `./artisan mrcore:wiki:db migrate`
