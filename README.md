@@ -1,4 +1,19 @@
-# Mrcore5 From Scratch
+## Mrcore5 Framework
+
+Mrcore is a set of Laravel and Lumen components used to build various systems.
+It is a framework, a development platform and a CMS.  It is my modularized version of Laravel!
+
+## Mrcore5 Modules
+
+Mrcore framework is simply Laravel + modules.
+
+* https://github.com/mrcore5/foundation
+* https://github.com/mrcore5/auth
+* https://github.com/mrcore5/wiki
+
+## Official Documentation
+
+### Installation
 
 * Pick base dir (ex: /var/www/blog).  Optional mkdir Apps, Files, Modules, Themes
 * Fresh laravel 5.1 inside System folder
@@ -17,21 +32,24 @@
 * Seed wiki `./artisan mrcore:wiki:db seed`
 * Visit in browser, done!
 
-
-
-
-# Investigate
-
-* In mrcore5 app, I comment out the Http/Kernel.php Csrf Token
-  * Found, if you edit post, set workbench, get CSRF token error
-
-
   
-# Performance
+#### Performance
 
-All just `ab -n 10 -c 1` on lindev1
+Tested with apache benchmark tool, a very simple `ab -n 10 -c 1`
 
-* Stock laravel 17ms
-* Mrcore/Foundation 17ms
-* Full wiki 60ms
-  * You can shave 10ms by NOT updateing clicks on both post and router = 50ms!
+* Stock laravel `17ms`
+* Mrcore/Foundation `17ms`
+* Mrcore/Wiki with complete working wiki home page `60ms`
+  * Found that 10ms is taken by simply updating post and router clicks (view counts), would be `50ms`
+  * At some point, may optimize these types of updates into a redis counter.
+
+
+
+
+## Contributing
+
+Thank you for considering contributing to the mRcore framework!  Fork and pull!
+
+### License
+
+Mrcore is open-sourced software licensed under the [MIT license](http://mreschke.com/license/mit)
