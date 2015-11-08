@@ -71,8 +71,49 @@ based on what youd do next.  We'll be turning this install into a wiki!
 
 **Success.** Check your browser.  Default login is `admin / password`.
 
+#### Cron and Queue Worker
 
-#### Modules
+If this is a new system, you'll generally want these cron additions as your normal user (not root).
+
+Run `crontab -e` as normal user and enter these lines
+
+	# m h  dom mon dow   command
+	  * *  *   *   *     php /var/www/mrcore5/System/artisan schedule:run > /dev/null 2>&1
+	  * *  *   *   *     php /var/www/mrcore5/System/artisan queue:restart > /dev/null 2>&1
+	  0 0  *   *   *     /usr/local/bin/composer self-update > /dev/null
+	  @hourly            php /var/www/mrcore5/System/artisan mrcore:wiki:index > /dev/null
+
+Notice `mrcore5/wiki` has an hourly post indexer
+
+#### Queue Worker
+
+Some mrcore5 modules or some of your own personal apps will probably utilize laravels queue workers.
+I always run Ubuntu/Debian and utilize `supervisor` to handle my queues.  
+
+Create a `/etc/supervisor/conf.d/mrcore5_queue.conf` like so
+
+	[program:mrcore5_queue]
+	process_name=%(program_name)s_%(process_num)02d
+	command=php /var/www/mrcore5/System/artisan queue:work --daemon --tries=3 --sleep=5 --memory=512
+	autostart=true
+	autorestart=true
+	user=toor
+	numprocs=1
+	redirect_stderr=true
+	stdout_logfile=/var/www/mrcore5/System/storage/logs/queue.log
+
+And restart supervisor with `sudo service supervisor restart`.
+You can run `ps aux` to verify the worker is indeed running.
+
+Because I use `--daemon` mode for my workers, I like to restart them every minute.  You'll notice
+a `queue:restart` cron line above.
+
+
+
+
+
+
+### Modules
 
 **fixme - reword**
 
@@ -84,8 +125,10 @@ views, routes and assets don't override the way you want, or in the proper order
 modules system you can define the order of each modules assets, views and routes.  
 
 
+
+
   
-#### Performance
+### Performance
 
 Tested with apache benchmark tool, a very simple `ab -n 10 -c 1`
 
@@ -94,6 +137,12 @@ Tested with apache benchmark tool, a very simple `ab -n 10 -c 1`
 * Mrcore/Wiki with complete working wiki home page `60ms`
   * Found that 10ms is taken by simply updating post and router clicks (view counts), would be `50ms`
   * At some point, may optimize these types of updates into a redis counter.
+
+
+
+
+
+
 
 
 
