@@ -31,7 +31,7 @@ store your articles with fine grained permissions, but it also allows an article
 application, an entire Laravel application!  Think "full laravel package" but only registered and
 fired up on defined routes.  This combination of wiki + apps = a simple and versatile CMS!
 
-For a live example, visit my personal website which is running mrcore wiki at http://mreschke.com
+**For a live example and demo**, visit my personal website which is running mrcore wiki at http://mreschke.com
 
 Lets build a wiki!
 
