@@ -16,20 +16,22 @@ choice is extremely simple.
 * https://github.com/mrcore5/auth
 * https://github.com/mrcore5/wiki
 
+
+
+
 ## Official Documentation
 
 ### Installation
 
 Notice this git repo is empty?  Thats becuase mrcore is simply Laravel + any number
-of modules you choose.  So you start with laravel, and build your system manually.
+of modules you choose.  So you start with Laravel, and build your system manually.
 
 In this example, I will setup mrcore as a full wiki.  The wiki is amazing because not only does it
-store your article with fine grained permissions, but it also allows an article to be an entire
-application, an entire Laravel application!  Think "workbenches" but only fired up on defined routes.
-This combination of wiki + apps = a simple and versatile CMS!
+store your articles with fine grained permissions, but it also allows an article to be an entire
+application, an entire Laravel application!  Think "full laravel package" but only registered and
+fired up on defined routes.  This combination of wiki + apps = a simple and versatile CMS!
 
 Lets build a wiki!
-
 
 **Custom Directory Structure + Stock Laravel**
 
@@ -38,28 +40,29 @@ Lets build a wiki!
 * The wiki is seeded with 10 default posts, so `mkdir -p /var/www/mrcore5/Files/index/{1..10}`
 * Install a fresh Laravel **into the System folder** `cd /var/www/mrcore5 && composer create-project laravel/laravel --prefer-dist System`
 
-At this point, fresh laravel!  Setup your own apache2 or nginx site and test it out in your browser!
+At this point you should have fresh working Laravel!  Setup your own apache2 or nginx site and test it out in your browser!
 
 
 **Add mrcore5/foundation asset and module system**
 
+* Work from the System directory `cd /var/www/mrcore5/System`
 * Add mrcore5/foundation `composer require mrcore/foundation:~1.0`
-* Manually edit your `config/app.php` file and add `Mrcore\Modules\Foundation\Providers\FoundationServiceProvider::class,` to your service providers (at the bottom)
-* While in `config/app.php` go ahead and remove or comment out all the those App\Provider\* laravel lines (App, Auth, Event, Route).  This is optional, but they really are not needed.  We will never touch the actual laravel app folder again.  All code is done in mrcore apps or modules!
+* Manually edit your `config/app.php` file and add `Mrcore\Modules\Foundation\Providers\FoundationServiceProvider::class,` to your service providers (at the bottom of the 'providers' array)
+* While in `config/app.php` go ahead and remove or comment out all the those `App\Providers\*` laravel lines (App, Auth, Event, Route).  This is optional, but they really are not needed.  We will never touch the actual laravel app folder again.  All code is done in mrcore apps or modules now!
 * Run the foundation installer script `./artisan mrcore:foundation:install`
 	* This will add the asset manager to `public/index.php`
-	* Public foundation `config/module.php` for your modification pleasure
-	* Remove laravels routes, views, models and migrations.  We won't be needing them.  Careful here if this is not a stock laravel.
+	* Publish the foundations `config/module.php` for your modification pleasure
+	* Remove Laravel routes, views, models and migrations.  We won't be needing them.  **Careful here if this is not a stock laravel.**
 
 Check your browser again.  Should see mRcore Foundation!
 At this point you have the minimum base of mrcore.  From here your project can take on many forms
-based on what youd do next.  We'll be turning this install into a wiki!
+based on what you do next.  We'll be turning this install into a wiki!
 
 **Add auth, wiki and theme system**
 
 * Add components `composer require mrcore/auth:~1.0 mrcore/wiki:~1.0 mrcore/bootswatch-theme:~1.0`
 * Manually edit your `config/auth.php` and set `'driver' =>  'mrcore'` and `'model' => Mrcore\Modules\Wiki\Models\User::class`
-	* Heres a little sed magic if you want
+	* A little optional sed magic if you want
 	* `sed -i "s/'driver'*/'driver' => 'mrcore'/" /var/www/mrcore5/System/config/auth.php`
 	* `sed -i "s/'model'*/'model' => Mrcore\\\\Modules\\\\Wiki\\\\Models\\\\User::class/" /var/www/mrcore5/System/config/auth.php`
 * Edit the `.env` to your liking
@@ -87,7 +90,7 @@ Notice `mrcore5/wiki` has an hourly post indexer
 
 #### Queue Worker
 
-Some mrcore5 modules or some of your own personal apps will probably utilize laravels queue workers.
+Some mrcore5 modules or some of your own personal apps will probably utilize Laravel queue workers.
 I always run Ubuntu/Debian and utilize `supervisor` to handle my queues.  
 
 Create a `/etc/supervisor/conf.d/mrcore5_queue.conf` like so
@@ -103,7 +106,7 @@ Create a `/etc/supervisor/conf.d/mrcore5_queue.conf` like so
 	stdout_logfile=/var/www/mrcore5/System/storage/logs/queue.log
 
 And restart supervisor with `sudo service supervisor restart`.
-You can run `ps aux` to verify the worker is indeed running.
+You can run `ps aux | queue:work` to verify the worker is indeed running.
 
 Because I use `--daemon` mode for my workers, I like to restart them every minute.  You'll notice
 a `queue:restart` cron line above.
