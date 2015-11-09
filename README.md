@@ -39,6 +39,7 @@ Lets build a wiki!
 
 * Assume you are installing to `/var/www/mrcore5`
 * Create our directory structure `mkdir -p /var/www/mrcore5/{Apps,Files,Modules,Themes}`
+ * This structure allows you to code apps, themes and modules as packages outside of composer and the vendor directory.  If you will not be coding, but instead simply use composer packages, you can skip these directores, even skip the System folder below and install all in the root like any Laravel project.
 * The wiki is seeded with 10 default posts, so `mkdir -p /var/www/mrcore5/Files/index/{1..10}`
 * Install a fresh Laravel **into the System folder** `cd /var/www/mrcore5 && composer create-project laravel/laravel --prefer-dist System`
 
@@ -135,7 +136,7 @@ modules system you can define the order of each modules assets, views and routes
 
 
 
-  
+
 ### Performance
 
 Tested with apache benchmark tool, a very simple `ab -n 10 -c 1`
