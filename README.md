@@ -63,7 +63,7 @@ based on what you do next.  We'll be turning this install into a wiki!
 
 **Add auth, wiki and theme system**
 
-* Add wiki component `composer require mrcore/wiki:~1.0`
+* Add components `composer require mrcore/auth:~1.0 mrcore/wiki:~1.0 mrcore/bootswatch-theme:~1.0`
 * Manually edit your `config/app.php` and add a env() to url like so `'url' => env('APP_URL', 'http://localhost')`
 * Manually edit your `config/auth.php` and set `'driver' =>  'mrcore'` and `'model' => Mrcore\Modules\Wiki\Models\User::class`
 	* A little optional sed magic if you want
