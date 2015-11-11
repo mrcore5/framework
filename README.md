@@ -50,7 +50,7 @@ At this point you should have fresh working Laravel!  Setup your own apache2 or 
 
 * Work from the System directory `cd /var/www/mrcore5/System`
 * Add mrcore5/foundation `composer require mrcore/foundation:~1.0`
-* Manually edit your `config/app.php` file and add `Mrcore\Modules\Foundation\Providers\FoundationServiceProvider::class,` to your service providers (at the bottom of the 'providers' array)
+* Manually edit your `config/app.php` file and add `Mrcore\Foundation\Providers\FoundationServiceProvider::class,` to your service providers (at the bottom of the 'providers' array)
 * While in `config/app.php` go ahead and remove or comment out all the those `App\Providers\*` laravel lines (App, Auth, Event, Route).  This is optional, but they really are not needed.  We will never touch the actual laravel app folder again.  All code is done in mrcore apps or modules now!
 * Run the foundation installer script `./artisan mrcore:foundation:install`
 	* This will add the asset manager to `public/index.php`
@@ -65,10 +65,10 @@ based on what you do next.  We'll be turning this install into a wiki!
 
 * Add components `composer require mrcore/auth:~1.0 mrcore/wiki:~1.0 mrcore/bootswatch-theme:~1.0`
 * Manually edit your `config/app.php` and add a env() to url like so `'url' => env('APP_URL', 'http://localhost')`
-* Manually edit your `config/auth.php` and set `'driver' =>  'mrcore'` and `'model' => Mrcore\Modules\Wiki\Models\User::class`
+* Manually edit your `config/auth.php` and set `'driver' =>  'mrcore'` and `'model' => Mrcore\Wiki\Models\User::class`
 	* A little optional sed magic if you want
 	* `sed -i "s/'driver'*/'driver' => 'mrcore'/" /var/www/mrcore5/System/config/auth.php`
-	* `sed -i "s/'model'*/'model' => Mrcore\\\\Modules\\\\Wiki\\\\Models\\\\User::class/" /var/www/mrcore5/System/config/auth.php`
+	* `sed -i "s/'model'*/'model' => Mrcore\\\\Wiki\\\\Models\\\\User::class/" /var/www/mrcore5/System/config/auth.php`
 * Edit the `.env` to your liking
 	* Add a `APP_URL=http://example.com` key
 	* Add a `MRCORE_WIKI_WEBDAV_URL=webdav.example.com` key
