@@ -1,4 +1,4 @@
-## Mrcore5 Framework
+## Mrcore5 Framework v1.x
 
 Mrcore is a set of Laravel and Lumen components used to build various systems.
 It is a framework, a development platform and a CMS.  It is a modularized version of Laravel
