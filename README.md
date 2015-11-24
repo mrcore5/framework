@@ -75,8 +75,8 @@ based on what you do next.  We'll be turning this install into a wiki!
 	* Define the database, we'll call this one `mrcore5` on localhost
 	* I also use `redis` for all my `cache`, `session`, and `queue` drivers, but up to you
 * Manually edit `config/modules.php` and set `'enable' => true'` for the Auth, Wiki, BaseTheme modules
-* Run the mrcore5/wiki migrations `./artisan mrcore:wiki:app db:migrate`
-* Run the mrcore5/wiki seeders `./artisan mrcore:wiki:app db:seed`
+* Migrate auth and wiki `./artisan mrcore:auth:app db:migrate` and `./artisan mrcore:wiki:app db:migrate`
+* Seed auth and wiki `./artisan mrcore:auth:app db:seed` and `./artisan mrcore:wiki:app db:seed`
 
 **Success.** Check your browser.  Default login is `admin / password`.
 
