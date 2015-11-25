@@ -39,31 +39,34 @@ Lets build a wiki!
 
 * Assume you are installing to `/var/www/mrcore5`
 * Create our directory structure `mkdir -p /var/www/mrcore5/{Apps,Files,Modules,Themes}`
- * This structure allows you to code apps, themes and modules as packages outside of composer and the vendor directory.  If you will not be coding, but instead simply use composer packages, you can skip these directores, even skip the System folder below and install all in the root like any Laravel project.
+ * This structure allows you to code apps, themes and modules as packages outside of composer and the vendor directory.  If you will not be coding, but instead simply use composer packages, you can skip these directories, even skip the System folder below and install all in the root like any Laravel project.
 * The wiki is seeded with 10 default posts, so `mkdir -p /var/www/mrcore5/Files/index/{1..10}`
 * Install a fresh Laravel **into the System folder** `cd /var/www/mrcore5 && composer create-project laravel/laravel --prefer-dist System`
 
-At this point you should have fresh working Laravel!  Setup your own apache2 or nginx site and test it out in your browser!
+At this point you should have a fresh working Laravel!  Setup your own apache2 or nginx site and test it out in your browser!  Your webserver should point to `/var/www/mrcore5/System/public`.
 
+**Add mrcore/wiki**
 
-**Add mrcore5/foundation asset and module system**
-
+* Work from the System directory `cd /var/www/mrcore5/System`
+* Add the wiki `composer require mrcore/wiki:~1.0` this will automatically pull in all required modules like foundation, auth, parser...
+ * Ignore any composer Ambiguous warnings at this point
 * Work from the System directory `cd /var/www/mrcore5/System`
 * Add mrcore5/foundation `composer require mrcore/foundation:~1.0`
 * Manually edit your `config/app.php` file and add `Mrcore\Foundation\Providers\FoundationServiceProvider::class,` to your service providers (at the bottom of the 'providers' array)
 * While in `config/app.php` go ahead and remove or comment out all the those `App\Providers\*` laravel lines (App, Auth, Event, Route).  This is optional, but they really are not needed.  We will never touch the actual laravel app folder again.  All code is done in mrcore apps or modules now!
+* Run `chmod a+x artisan`
 * Run the foundation installer script `./artisan mrcore:foundation:install`
-	* This will add the asset manager to `public/index.php`
-	* Publish the foundations `config/module.php` for your modification pleasure
-	* Remove Laravel routes, views, models and migrations.  We won't be needing them.  **Careful here if this is not a stock laravel.**
+ * This will add the asset manager to `public/index.php`
+ * Publish the foundations `config/module.php` for your modification pleasure
+ * Remove Laravel routes, views, models and migrations.  We won't be needing them.  **Careful here if this is not a stock laravel.**
+* Run `./artisan optimize`
 
 Check your browser again.  Should see mRcore Foundation!
 At this point you have the minimum base of mrcore.  From here your project can take on many forms
 based on what you do next.  We'll be turning this install into a wiki!
 
-**Add auth, wiki and theme system**
+**Configure Modules**
 
-* Add components `composer require mrcore/auth:~1.0 mrcore/wiki:~1.0 mrcore/bootswatch-theme:~1.0`
 * Manually edit your `config/app.php` and add a env() to url like so `'url' => env('APP_URL', 'http://localhost')`
 * Manually edit your `config/auth.php` and set `'driver' =>  'mrcore'` and `'model' => Mrcore\Wiki\Models\User::class`
 	* A little optional sed magic if you want
@@ -73,8 +76,7 @@ based on what you do next.  We'll be turning this install into a wiki!
 	* Add a `APP_URL=http://example.com` key
 	* Add a `MRCORE_WIKI_WEBDAV_URL=webdav.example.com` key
 	* Define the database, we'll call this one `mrcore5` on localhost
-	* I also use `redis` for all my `cache`, `session`, and `queue` drivers, but up to you
-* Manually edit `config/modules.php` and set `'enable' => true'` for the Auth, Wiki, BaseTheme modules
+* Manually edit `config/modules.php` and set `'enable' => true'` for the `Auth, Wiki, Parser and BaseTheme` modules
 * Migrate auth and wiki `./artisan mrcore:auth:app db:migrate` and `./artisan mrcore:wiki:app db:migrate`
 * Seed auth and wiki `./artisan mrcore:auth:app db:seed` and `./artisan mrcore:wiki:app db:seed`
 
