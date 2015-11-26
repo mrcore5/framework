@@ -50,8 +50,6 @@ At this point you should have a fresh working Laravel!  Setup your own apache2 o
 * Work from the System directory `cd /var/www/mrcore5/System`
 * Add the wiki `composer require mrcore/wiki:~1.0` this will automatically pull in all required modules like foundation, auth, parser...
  * Ignore any composer Ambiguous warnings at this point
-* Work from the System directory `cd /var/www/mrcore5/System`
-* Add mrcore5/foundation `composer require mrcore/foundation:~1.0`
 * Manually edit your `config/app.php` file and add `Mrcore\Foundation\Providers\FoundationServiceProvider::class,` to your service providers (at the bottom of the 'providers' array)
 * While in `config/app.php` go ahead and remove or comment out all the those `App\Providers\*` laravel lines (App, Auth, Event, Route).  This is optional, but they really are not needed.  We will never touch the actual laravel app folder again.  All code is done in mrcore apps or modules now!
 * Run `chmod a+x artisan`
