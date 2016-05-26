@@ -54,7 +54,7 @@ At this point you should have a fresh working Laravel!  Setup your own apache2 o
 * While in `config/app.php` go ahead and remove or comment out all the those `App\Providers\*` laravel lines (App, Auth, Event, Route).  This is optional, but they really are not needed.  We will never touch the actual laravel app folder again.  All code is done in mrcore apps or modules now!
 * Run `chmod a+x artisan`
 * Run the foundation installer script `./artisan mrcore:foundation:install`
- * This will add the asset manager to `public/index.php`
+ * This will include foundation bootstrap methods from within `bootstrap/autoload.php` which contains the asset manager and other helpers.
  * Publish the foundations `config/module.php` for your modification pleasure
  * Remove Laravel routes, views, models and migrations.  We won't be needing them.  **Careful here if this is not a stock laravel.**
 * Run `./artisan optimize`
