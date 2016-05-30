@@ -1,4 +1,4 @@
-## Mrcore5 Framework v2.0
+## Mrcore Framework v2.0
 
 Mrcore is a set of Laravel components used to build various systems.
 It is a framework, a development platform and a CMS.  It is a modularized version of Laravel
@@ -10,7 +10,7 @@ loading system for laravel.
 Once we have a proper asset and module system, plugging in modules to build the system or CMS or your
 choice is extremely simple.
 
-## Mrcore5 Available Modules
+## Mrcore Available Modules
 
 * https://github.com/mrcore5/foundation
 * https://github.com/mrcore5/auth
