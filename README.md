@@ -41,7 +41,7 @@ Lets build a wiki!
 * Create our directory structure `mkdir -p /var/www/mrcore5/{Apps,Files,Modules,Themes}`
  * This structure allows you to code apps, themes and modules as packages outside of composer and the vendor directory.  If you will not be coding, but instead simply use composer packages, you can skip these directories, even skip the System folder below and install all in the root like any Laravel project.
 * The wiki is seeded with 10 default posts, so `mkdir -p /var/www/mrcore5/Files/index/{1..10}`
-* Install a fresh Laravel **into the System folder** `cd /var/www/mrcore5 && composer create-project laravel/laravel System "5.1.*"`
+* Install a fresh Laravel **into the System folder** `cd /var/www/mrcore5 && composer create-project laravel/laravel System "5.2.*"`
 
 At this point you should have a fresh working Laravel!  Setup your own apache2 or nginx site and test it out in your browser!  Your webserver should point to `/var/www/mrcore5/System/public`.
 
