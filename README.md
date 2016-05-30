@@ -68,10 +68,7 @@ based on what you do next.  We'll be turning this install into a wiki!
 **Configure Modules**
 
 * Manually edit your `config/app.php` and add a env() to url like so `'url' => env('APP_URL', 'http://localhost')`
-* Manually edit your `config/auth.php` and set `'driver' =>  'mrcore'` and `'model' => Mrcore\Wiki\Models\User::class`
-	* A little optional sed magic if you want
-	* `sed -i "s/'driver'*/'driver' => 'mrcore'/" /var/www/mrcore5/System/config/auth.php`
-	* `sed -i "s/'model'*/'model' => Mrcore\\\\Wiki\\\\Models\\\\User::class/" /var/www/mrcore5/System/config/auth.php`
+* Manually edit your `config/auth.php` and set the guards web `'driver' => 'mrcore'` and the providers users `'model' => Mrcore\Auth\Models\User::class`
 * Edit the `.env` to your liking
 	* Add a `APP_URL=http://example.com` key
 	* Add a `MRCORE_WIKI_WEBDAV_URL=webdav.example.com` key
