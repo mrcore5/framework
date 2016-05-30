@@ -1,6 +1,6 @@
-## Mrcore5 Framework v1.0
+## Mrcore5 Framework v2.0
 
-Version 1.0 works with Laravel 5.1 and below.  Use version 2.0 for Laravel 5.2.
+Version 2.0 works with Laravel 5.2.  Use version 1.0 for Laravel 5.1.
 
 Mrcore is a set of Laravel and Lumen components used to build various systems.
 It is a framework, a development platform and a CMS.  It is a modularized version of Laravel
@@ -50,7 +50,7 @@ At this point you should have a fresh working Laravel!  Setup your own apache2 o
 **Add mrcore/wiki**
 
 * Work from the System directory `cd /var/www/mrcore5/System`
-* Add the wiki `composer require mrcore/wiki:~1.0` this will automatically pull in all required modules like foundation, auth, parser...
+* Add the wiki `composer require mrcore/wiki:~2.0` this will automatically pull in all required modules like foundation, auth, parser...
  * Ignore any composer Ambiguous warnings at this point
 * Manually edit your `config/app.php` file and add `Mrcore\Foundation\Providers\FoundationServiceProvider::class,` to your service providers (at the bottom of the 'providers' array)
 * While in `config/app.php` go ahead and remove or comment out all the those `App\Providers\*` laravel lines (App, Auth, Event, Route).  This is optional, but they really are not needed.  We will never touch the actual laravel app folder again.  All code is done in mrcore apps or modules now!
