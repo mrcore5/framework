@@ -23,8 +23,8 @@ choice is extremely simple.
 
 ### Installation
 
-Notice this git repo is empty?  Thats becuase mrcore is simply Laravel + any number
-of modules you choose.  So you start with Laravel, and build your system manually.
+Notice this git repo is empty!  That's becuase mrcore is simply Laravel + any number
+of mrcore modules and apps you choose.  So you start with Laravel, and build your system manually.
 
 In this example, I will setup mrcore as a full wiki.  The wiki is amazing because not only does it
 store your articles with fine grained permissions, but it also allows an article to be an entire
@@ -60,15 +60,12 @@ At this point you should have a fresh working Laravel!  Setup your own apache2 o
 * Run `./artisan optimize`
 
 Check your browser again.  Should see mRcore Foundation!
-At this point you have the minimum base of mrcore.  From here your project can take on many forms
-based on what you do next.  We'll be turning this install into a wiki!
 
 **Configure Modules**
 
-* Manually edit your `config/app.php` and add a env() to url like so `'url' => env('APP_URL', 'http://localhost')`
+* Manually edit your `config/app.php` and set timezone to `America/Chicago` or whatever your timezone is
 * Manually edit your `config/auth.php` and set the guards web `'driver' => 'mrcore'` and the providers users `'model' => Mrcore\Auth\Models\User::class`
 * Edit the `.env` to your liking
-	* Add a `APP_URL=http://example.com` key
 	* Add a `MRCORE_WIKI_WEBDAV_URL=webdav.example.com` key
 	* Define the database, we'll call this one `mrcore5` on localhost
 * Manually edit `config/modules.php` and set `'enable' => true'` for the `Auth, Wiki, Parser and BaseTheme` modules
