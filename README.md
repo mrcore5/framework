@@ -69,6 +69,7 @@ After installing the foundation above, assuming `/var/www/larabuild1` directory,
 ```
 * Now visit `/test` in our browser.
 * Start coding in the `App/Mreschke/Test` folder.
+* Mrcore apps come with a `cli`.  Just edit your `Mreschke/Test/Providers/TestServiceProvider` and uncomment the `registerCommand()` `AppCommand`.  Then you can run `./artisan` and see `mreschke:test:app` is now available.  Run it to see the help output.
 
 
 
