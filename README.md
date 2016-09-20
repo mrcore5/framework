@@ -35,7 +35,7 @@ of mrcore modules and apps you choose.  So you start with Laravel, and build you
 * `chmod a+x ./artisan`
 * Install mrcore foundation `composer require mrcore/foundation:~2.0`
 * Manually edit your `config/app.php` file and add `Mrcore\Foundation\Providers\FoundationServiceProvider::class,` to your service providers (at the bottom of the 'providers' array)
-* While in `config/app.php` go ahead and remove or comment out all the those `App\Providers\*` Laravel lines (App, Auth, Event, Route).  This is optional, but they really are not needed.  We will never touch the actual Laravel app folder again.  All code is done in mrcore apps or modules now!
+ * While in `config/app.php` go ahead and remove or comment out all the those `App\Providers\*` Laravel lines (App, Auth, Event, Route).  This is optional, but they really are not needed.  We will never touch the actual Laravel app folder again.  All code is done in mrcore apps or modules now!
 * Run the foundation installer script `./artisan mrcore:foundation:install`
  * This will include foundation bootstrap methods from within `bootstrap/autoload.php` which contains the asset manager and other helpers.
  * Publish the foundations `config/module.php` for your modification pleasure
@@ -52,21 +52,21 @@ After installing the foundation above, assuming `/var/www/larabuild1` directory,
 * Set `'enabled' => true,` for `BaseTheme` in `config/modules.php`
 * Create the app called `Mreschke\Test` by running `./artisan mrcore:foundation:app:make mreschke/test`
 * Edit `config/module.php` and add
-
-    '%app%' => [
-        'type' => 'module',
-        'namespace' => 'Mreschke\Test',
-        'controller_namespace' => 'Mreschke\Test\Http\Controllers',
-        'provider' => 'Mreschke\Test\Providers\TestServiceProvider',
-        'path' => ['vendor/mreschke/test', '../Apps/Mreschke/Test'],
-        'routes' => 'Http/routes.php',
-        'route_prefix' => 'test',
-        'views' => 'Views',
-        'view_prefix' => 'test',
-        'assets' => 'Assets',
-        'enabled' => true,
-    ],
-
+```
+'%app%' => [
+	'type' => 'module',
+	'namespace' => 'Mreschke\Test',
+	'controller_namespace' => 'Mreschke\Test\Http\Controllers',
+	'provider' => 'Mreschke\Test\Providers\TestServiceProvider',
+	'path' => ['vendor/mreschke/test', '../Apps/Mreschke/Test'],
+	'routes' => 'Http/routes.php',
+	'route_prefix' => 'test',
+	'views' => 'Views',
+	'view_prefix' => 'test',
+	'assets' => 'Assets',
+	'enabled' => true,
+],
+```
 * Now visit `/test` in our browser.
 * Start coding in the `App/Mreschke/Test` folder.
 
@@ -100,10 +100,10 @@ If this is a new system, you'll generally want these cron additions as your norm
 Run `crontab -e` as normal user and enter these lines
 
 	# m h  dom mon dow   command
-	  * *  *   *   *     php /var/www/mrcore5/System/artisan schedule:run > /dev/null 2>&1
-	  * *  *   *   *     php /var/www/mrcore5/System/artisan queue:restart > /dev/null 2>&1
-	  0 0  *   *   *     /usr/local/bin/composer self-update > /dev/null
-	  @hourly            php /var/www/mrcore5/System/artisan mrcore:wiki:index > /dev/null
+	  * *  *   *   *	 php /var/www/mrcore5/System/artisan schedule:run > /dev/null 2>&1
+	  * *  *   *   *	 php /var/www/mrcore5/System/artisan queue:restart > /dev/null 2>&1
+	  0 0  *   *   *	 /usr/local/bin/composer self-update > /dev/null
+	  @hourly			php /var/www/mrcore5/System/artisan mrcore:wiki:index > /dev/null
 
 Notice `mrcore5/wiki` has an hourly post indexer
 
@@ -118,24 +118,24 @@ This is more robust than supervisor and the prefered method.
 
 Create a `/etc/systemd/system/mrcore5.service` systemd unit file
 
-    # mrcore5 queue worker using systemd
-    # ----------------------------------
-    # /etc/systemd/system/mrcore5.service
-    # systemctl enable mrcore5
-    # systemctl start mrcore5
+	# mrcore5 queue worker using systemd
+	# ----------------------------------
+	# /etc/systemd/system/mrcore5.service
+	# systemctl enable mrcore5
+	# systemctl start mrcore5
 
-    [Unit]
-    Description=mrcore5 queue worker
+	[Unit]
+	Description=mrcore5 queue worker
 
-    [Service]
-    User=toor
-    Group=toor
-    Restart=always
-    RestartSec=3
-    ExecStart=/usr/bin/php /var/www/mrcore5/System/artisan queue:work --daemon --sleep=3 --tries=3 --memory=1024
+	[Service]
+	User=toor
+	Group=toor
+	Restart=always
+	RestartSec=3
+	ExecStart=/usr/bin/php /var/www/mrcore5/System/artisan queue:work --daemon --sleep=3 --tries=3 --memory=1024
 
-    [Install]
-    WantedBy=multi-user.target
+	[Install]
+	WantedBy=multi-user.target
 
 * Enable at start with `sudo systemctl enable mrcore5`
 * Start with `sudo systemctl start mrcore5`.  Similar for `restart` and `stop`.
