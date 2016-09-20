@@ -21,58 +21,77 @@ choice is extremely simple.
 
 ## Official Documentation
 
-### Installation
+### Installation Foundation
 
-Notice this git repo is empty!  That's becuase mrcore is simply Laravel + any number
+Notice this git repo is empty!  That's because mrcore is simply Laravel + any number
 of mrcore modules and apps you choose.  So you start with Laravel, and build your system manually.
 
-In this example, I will setup mrcore as a full wiki.  The wiki is amazing because not only does it
-store your articles with fine grained permissions, but it also allows an article to be an entire
-application, an entire Laravel application!  Think "full laravel package" but only registered and
-fired up on defined routes.  This combination of wiki + apps = a simple and versatile CMS!
-
-**For a live example and demo**, visit my personal website which is running mrcore wiki at http://mreschke.com
-
-Lets build a wiki!
-
-**Custom Directory Structure + Stock Laravel**
-
-* Assume you are installing to `/var/www/mrcore5`
-* Create our directory structure `mkdir -p /var/www/mrcore5/{Apps,Files,Modules,Themes}`
+* Assume you are installing to `/var/www/larabuild1`
+* Create our directory structure `mkdir -p /var/www/larabuild1/{Apps,Files,Modules,Themes}`
  * This structure allows you to code apps, themes and modules as packages outside of composer and the vendor directory.  If you will not be coding, but instead simply use composer packages, you can skip these directories, even skip the System folder below and install all in the root like any Laravel project.
-* The wiki is seeded with 10 default posts, so `mkdir -p /var/www/mrcore5/Files/index/{1..10}`
-* Install a fresh Laravel **into the System folder** `cd /var/www/mrcore5 && composer create-project laravel/laravel System "5.2.*"`
-
-At this point you should have a fresh working Laravel!  Setup your own apache2 or nginx site and test it out in your browser!  Your webserver should point to `/var/www/mrcore5/System/public`.
-
-**Add mrcore/wiki**
-
-* Work from the System directory `cd /var/www/mrcore5/System`
-* Add the wiki `composer require mrcore/wiki:~2.0` this will automatically pull in all required modules like foundation, auth, parser...
- * Ignore any composer Ambiguous warnings at this point
+* Install Laravel 5.3 `cd /var/www/larabuild1 && composer create-project laravel/laravel System "5.3.*"`
+ * At this point you should have a fresh working Laravel!  Setup your own apache2 or nginx site and test it out in your browser!  Your webserver should point to `/var/www/larabuild1/System/public`.
+* Working from `cd /var/www/larabuild1/System`
+* `chmod a+x ./artisan`
+* Install mrcore foundation `composer require mrcore/foundation:~2.0`
 * Manually edit your `config/app.php` file and add `Mrcore\Foundation\Providers\FoundationServiceProvider::class,` to your service providers (at the bottom of the 'providers' array)
-* While in `config/app.php` go ahead and remove or comment out all the those `App\Providers\*` laravel lines (App, Auth, Event, Route).  This is optional, but they really are not needed.  We will never touch the actual laravel app folder again.  All code is done in mrcore apps or modules now!
-* Run `chmod a+x artisan`
+* While in `config/app.php` go ahead and remove or comment out all the those `App\Providers\*` Laravel lines (App, Auth, Event, Route).  This is optional, but they really are not needed.  We will never touch the actual Laravel app folder again.  All code is done in mrcore apps or modules now!
 * Run the foundation installer script `./artisan mrcore:foundation:install`
  * This will include foundation bootstrap methods from within `bootstrap/autoload.php` which contains the asset manager and other helpers.
  * Publish the foundations `config/module.php` for your modification pleasure
  * Remove Laravel routes, views, models and migrations.  We won't be needing them.  **Careful here if this is not a stock laravel.**
-* Run `./artisan optimize`
 
 Check your browser again.  Should see mRcore Foundation!
 
-**Configure Modules**
 
+### Build Your First Web App
+
+After installing the foundation above, assuming `/var/www/larabuild1` directory, you can create your first mrcore web app with the following.
+
+* Install the bootswatch theme with `composer require mrcore/bootswatch-theme:~2.0` from the `System` directory
+* Set `'enabled' => true,` for `BaseTheme` in `config/modules.php`
+* Create the app called `Mreschke\Test` by running `./artisan mrcore:foundation:app:make mreschke/test`
+* Edit `config/module.php` and add
+
+    '%app%' => [
+        'type' => 'module',
+        'namespace' => 'Mreschke\Test',
+        'controller_namespace' => 'Mreschke\Test\Http\Controllers',
+        'provider' => 'Mreschke\Test\Providers\TestServiceProvider',
+        'path' => ['vendor/mreschke/test', '../Apps/Mreschke/Test'],
+        'routes' => 'Http/routes.php',
+        'route_prefix' => 'test',
+        'views' => 'Views',
+        'view_prefix' => 'test',
+        'assets' => 'Assets',
+        'enabled' => true,
+    ],
+
+* Now visit `/test` in our browser.
+* Start coding in the `App/Mreschke/Test` folder.
+
+
+
+### Install a wiki
+
+After installing the foundation above, assuming `/var/www/larabuild1` directory, you can setup your own wiki using `mrcore/wiki` package.
+
+* Install the wiki with `composer require mrcore/wiki:~2.0` from the `System` directory
+* The wiki is seeded with 10 default posts, so `mkdir -p /var/www/larabuild1/Files/index/{1..10}`
 * Manually edit your `config/app.php` and set timezone to `America/Chicago` or whatever your timezone is
 * Manually edit your `config/auth.php` and set the guards web `'driver' => 'mrcore'` and the providers users `'model' => Mrcore\Auth\Models\User::class`
 * Edit the `.env` to your liking
-	* Add a `MRCORE_WIKI_WEBDAV_URL=webdav.example.com` key
-	* Define the database, we'll call this one `mrcore5` on localhost
+ * Add a `MRCORE_WIKI_WEBDAV_URL=webdav.example.com` key
+ * Define the database, we'll call this one `mrcore5` on localhost
+ * Set your mail settings properly and any other settings in `.end` or the `config/*` files
 * Manually edit `config/modules.php` and set `'enable' => true'` for the `Auth, Wiki, Parser and BaseTheme` modules
-* Migrate auth and wiki `./artisan mrcore:auth:app db:migrate` and `./artisan mrcore:wiki:app db:migrate`
-* Seed auth and wiki `./artisan mrcore:auth:app db:seed` and `./artisan mrcore:wiki:app db:seed`
+* Migrate auth `./artisan mrcore:auth:app db:migrate`
+* Migrate wiki `./artisan mrcore:wiki:app db:migrate`
+* Seed auth `./artisan mrcore:auth:app db:seed`
+* Seed wiki `./artisan mrcore:wiki:app db:seed`
 
 **Success.** Check your browser.  Default login is `admin / password`.
+
 
 #### Cron and Queue Worker
 
@@ -91,8 +110,40 @@ Notice `mrcore5/wiki` has an hourly post indexer
 #### Queue Worker
 
 Some mrcore5 modules or some of your own personal apps will probably utilize Laravel queue workers.
-I always run Ubuntu/Debian and utilize `supervisor` to handle my queues.  
+I always run Ubuntu/Debian and utilize `systemd` or `supervisor` to handle my queues.
 
+
+##### Systemd
+This is more robust than supervisor and the prefered method.
+
+Create a `/etc/systemd/system/mrcore5.service` systemd unit file
+
+    # mrcore5 queue worker using systemd
+    # ----------------------------------
+    # /etc/systemd/system/mrcore5.service
+    # systemctl enable mrcore5
+    # systemctl start mrcore5
+
+    [Unit]
+    Description=mrcore5 queue worker
+
+    [Service]
+    User=toor
+    Group=toor
+    Restart=always
+    RestartSec=3
+    ExecStart=/usr/bin/php /var/www/mrcore5/System/artisan queue:work --daemon --sleep=3 --tries=3 --memory=1024
+
+    [Install]
+    WantedBy=multi-user.target
+
+* Enable at start with `sudo systemctl enable mrcore5`
+* Start with `sudo systemctl start mrcore5`.  Similar for `restart` and `stop`.
+* If you edit the unit file, reload with `systemctl daemon-reload`
+
+
+
+##### Supervisor
 Create a `/etc/supervisor/conf.d/mrcore5_queue.conf` like so
 
 	[program:mrcore5_queue]
@@ -128,9 +179,6 @@ views, routes and assets don't override the way you want, or in the proper order
 modules system you can define the order of each modules assets, views and routes.  
 
 
-
-
-
 ### Performance
 
 Tested with apache benchmark tool, a very simple `ab -n 10 -c 1`
@@ -144,13 +192,10 @@ Tested with apache benchmark tool, a very simple `ab -n 10 -c 1`
 
 
 
-
-
-
 ## Versions
 
-* 1.0 is for Laravel 5.1 and below
-* 2.0 is for Laravel 5.2 and above
+* 1.0 is for Laravel 5.1
+* 2.0 is for Laravel 5.3
 
 ## Contributing
 
