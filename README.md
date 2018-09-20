@@ -91,7 +91,7 @@ Modify `composer.json` and add the `path` type repository pointing to `./modules
     "acme/blog": "*@dev",
     "acme/dealer-portal": "*@dev"
   }
-...
+}
 ```
 Notice we use the `path` repository and we use `*@dev` in the modules we want to code LIVE!
 
@@ -147,7 +147,7 @@ Now you can visit the various route prefixes for each module, example http://loc
 For web apps, any public assets (css, html, images...) that you have in your module will be piped through the mRcore asset manager! This eliminates
 the need to symlink into `./public` or `artisan publish` on every change.  For example http://localhost:8000/assets/app/acme/blog/css/home.css will be streamed via the asset manager!
 
-**Have build all your web apps, API's and CLI's as reusable mRcore modules!**
+**Have fun building all your web apps, API's and CLI's as reusable mRcore modules!**
 
 ----
 ----
