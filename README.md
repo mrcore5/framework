@@ -2,16 +2,14 @@
 
 ## What Is Mrcore
 
-mRcore is a module system for Laravel allowing you to build all your applications as reusable modules.
-Module resemble the Laravel folder structure and can be plugged into a single Laravel instance.
+mRcore is a module/package system for Laravel allowing you to build all your applications as reusable modules.
+Modules resemble the Laravel folder structure and can be plugged into a single Laravel instance.
 mRcore solves module loading dependency order and in-place live asset handling.  Modules can be
-full web UIs, REST APIs and/or full Console command line apps.  A well build module becomes your
-shared PHP library, a native API, which can be reused as dependencies in other modules.
+full web UIs, REST APIs and/or full Console command line apps.  A well built module is not only your
+UI and API, but a shared PHP library, a native API or repository which can be reused as dependencies in other modules.
 
-We firmly believe that all code should be built as modules and not in Laravels directory structure itself.
-Laravel simply becomes the "app server".  A single Laravel instance can host any number of modules. 
-
-See https://github.com/mrcore5/framework for details and installation instructions.
+We firmly believe that all code should be built as modules and not in Laravel's directory structure itself.
+Laravel simply becomes the "package server".  A single Laravel instance can host any number of modules.
 
 
 
