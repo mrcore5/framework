@@ -50,9 +50,9 @@ A good folder structure looks like this
 
 We can create these 3 modules using mRcore framework app builder command
 ```
-./artisan mrcore:foundation:app:make acme/wiki --template=mrcore5-src --path=~/Code/acme/wiki
-./artisan mrcore:foundation:app:make acme/blog --template=mrcore5-src --path=~/Code/acme/blog
-./artisan mrcore:foundation:app:make acme/dealer-portal --template=mrcore5-src --path=~/Code/acme/dealer-portal
+./artisan mrcore:foundation:app:make acme/wiki --template=5.7 --path=~/Code/acme/wiki
+./artisan mrcore:foundation:app:make acme/blog --template=5.7 --path=~/Code/acme/blog
+./artisan mrcore:foundation:app:make acme/dealer-portal --template=5.7 --path=~/Code/acme/dealer-portal
 ```
 
 For coding convenience, we create a `laravel57/modules` folder and symlink our modules there
