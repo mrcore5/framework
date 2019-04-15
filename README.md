@@ -1,4 +1,4 @@
-# mRcore Framework v5.7
+# mRcore Framework v5.8
 
 ## What Is Mrcore
 
@@ -15,18 +15,18 @@ Laravel simply becomes the "package server".  A single Laravel instance can host
 
 ## Installing mRcore Framework
 
-1. Install stock Laravel 5.7
+1. Install stock Laravel 5.8
 	```
 	cd ~/Code/acme
-	laravel new laravel57
+	laravel new laravel58
 	cd laravel57
 	php artisan serve
 	```
 	* Visit http://localhost:8000 to see stock laravel!  Then stop the server.
 
-2. Install mRcore Framework on Laravel 5.7
+2. Install mRcore Framework on Laravel 5.8
 	```
-	composer require mrcore/foundation:5.7.*
+	composer require mrcore/foundation:5.8.*
 	php artisan mrcore:foundation:install
 	php artisan serve
 	```
@@ -42,7 +42,7 @@ A good folder structure looks like this
 ```
 ~/Code/
   acme/
-    laravel57/
+    laravel58/
     wiki/
     blog/
     dealer-portal/
@@ -50,28 +50,28 @@ A good folder structure looks like this
 
 We can create these 3 modules using mRcore framework app builder command
 ```
-./artisan mrcore:foundation:app:make acme/wiki --template=5.7 --path=~/Code/acme/wiki
-./artisan mrcore:foundation:app:make acme/blog --template=5.7 --path=~/Code/acme/blog
-./artisan mrcore:foundation:app:make acme/dealer-portal --template=5.7 --path=~/Code/acme/dealer-portal
+./artisan mrcore:foundation:app:make acme/wiki --template=5.8 --path=~/Code/acme/wiki
+./artisan mrcore:foundation:app:make acme/blog --template=5.8 --path=~/Code/acme/blog
+./artisan mrcore:foundation:app:make acme/dealer-portal --template=5.8 --path=~/Code/acme/dealer-portal
 ```
 
 For coding convenience, we create a `laravel57/modules` folder and symlink our modules there
 ```
-mkdir -p ~/Code/acme/laravel57/modules/acme
-cd ~/Code/acme/laravel57/modules/acme
+mkdir -p ~/Code/acme/laravel58/modules/acme
+cd ~/Code/acme/laravel58/modules/acme
 ln -s ../../../wiki
 ln -s ../../../blog
 ln -s ../../../dealer-portal
 ```
-Back to `cd ~/Code/acme/laravel57`
+Back to `cd ~/Code/acme/laravel58`
 
 Modify `composer.json` and add the `path` type repository pointing to `./modules/*/*` so we can code our packages LIVE!
 
 **Except of top of composer.json file only**
 ```json
 {
-  "name": "acme/laravel57",
-  "description": "Acme Laravel 5.7",
+  "name": "acme/laravel58",
+  "description": "Acme Laravel 5.8",
   "keywords": ["laravel", "acme"],
   "license": "MIT",
   "type": "project",
@@ -81,9 +81,10 @@ Modify `composer.json` and add the `path` type repository pointing to `./modules
   "require": {
     "php": "^7.1.3",
     "fideloper/proxy": "^4.0",
-    "laravel/framework": "5.7.*",
+    "laravel/framework": "5.8.*",
     "laravel/tinker": "^1.0",
-    "mrcore/foundation": "5.7.*",
+
+    "mrcore/foundation": "5.8.*",
 
     "acme/wiki": "*@dev",
     "acme/blog": "*@dev",
@@ -136,8 +137,8 @@ this time altering the "Loading Order / Override Management" section.  Add all 3
 
 You will also need to install a theme and probably auth
 ```
-composer require mrcore/bootswatch-theme:5.7.*
-composer require mrcore/auth:5.7.*
+composer require mrcore/bootswatch-theme:5.8.*
+composer require mrcore/auth:5.8.*
 ```
 
 Now you can visit the various route prefixes for each module, example http://localhost:8000/wiki
@@ -157,6 +158,7 @@ the need to symlink into `./public` or `artisan publish` on every change.  For e
 * 2.0 is for Laravel 5.3, 5.4, 5.5
 * 5.6 is for Laravel 5.6
 * 5.7 is for Laravel 5.7
+* 5.8 is for Laravel 5.8
 * ... Following Laravel versions from here on
 
 ## Contributing
